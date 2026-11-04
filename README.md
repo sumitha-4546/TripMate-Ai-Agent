@@ -597,7 +597,7 @@ Processes traveler queries through the LangGraph agent and returns synthesized a
 
 Watch the complete TripMate AI Travel Assistant demonstration:
 
-📹 **[Click here to watch the TripMate Demo Video](YOUR_GOOGLE_DRIVE_LINK)**
+📹 **[Click here to watch the TripMate Demo Video](https://drive.google.com/file/d/1YXR62MJw2_ZN50tO8jGhKH6SlRpR5_t9/view?usp=drive_link)**
 
 The video covers:
 - Project overview and architecture
