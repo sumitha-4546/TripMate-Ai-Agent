@@ -1,4 +1,3 @@
-"""TripMate AI Travel Assistant - Interactive & Automated Demo Runner."""
 
 import asyncio
 import json

@@ -7,7 +7,6 @@ from app.tools.weather_tool import get_weather_forecast
 
 
 def test_valid_destination_seasonal():
-    """Test retrieving weather for a valid destination with month reference."""
     result = get_weather_forecast.invoke({"city": "Tokyo", "date_or_month": "December"})
 
     assert isinstance(result, dict)
@@ -22,7 +21,6 @@ def test_valid_destination_seasonal():
 
 
 def test_invalid_destination():
-    """Test requesting weather for an unsupported city returns structured error."""
     result = get_weather_forecast.invoke({"city": "Atlantis", "date_or_month": "today"})
 
     assert isinstance(result, dict)
@@ -33,7 +31,6 @@ def test_invalid_destination():
 
 
 def test_missing_date_handled_gracefully():
-    """Test that missing or empty date/month does not crash and provides useful weather data."""
     result = get_weather_forecast.invoke({"city": "Bangkok", "date_or_month": ""})
 
     assert isinstance(result, dict)
@@ -44,7 +41,6 @@ def test_missing_date_handled_gracefully():
 
 
 def test_api_timeout_fallback():
-    """Test that Open-Meteo network timeout gracefully falls back to seasonal climate estimates."""
     tomorrow = (datetime.now() + timedelta(days=1)).strftime("%Y-%m-%d")
 
     # Mock httpx.Client to raise TimeoutException
@@ -59,7 +55,6 @@ def test_api_timeout_fallback():
 
 
 def test_api_failure_fallback():
-    """Test that Open-Meteo HTTP 500 server error gracefully falls back to seasonal estimates."""
     tomorrow = (datetime.now() + timedelta(days=1)).strftime("%Y-%m-%d")
 
     mock_resp = MagicMock()
@@ -77,7 +72,6 @@ def test_api_failure_fallback():
 
 
 def test_forecast_horizon_limitation():
-    """Test that dates beyond the 14-day forecast horizon return seasonal estimates and never false live forecasts."""
     # 45 days in future
     future_date = (datetime.now() + timedelta(days=45)).strftime("%Y-%m-%d")
 

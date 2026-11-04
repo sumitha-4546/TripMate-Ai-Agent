@@ -8,11 +8,7 @@ _EMBEDDER_INSTANCE = None
 
 
 class LocalSentenceTransformerEmbeddings(Embeddings):
-    """Local Sentence Transformers embeddings wrapper conforming to LangChain's Embeddings interface.
-
-    Uses `sentence-transformers/all-MiniLM-L6-v2` locally on CPU.
-    In testing mode (APP_ENV=testing), uses fast deterministic embeddings for instantaneous test execution.
-    """
+    
 
     def __init__(self, model_name: str = settings.embedding_model) -> None:
         self.model_name = model_name
@@ -20,7 +16,6 @@ class LocalSentenceTransformerEmbeddings(Embeddings):
 
     @property
     def model(self):
-        """Lazy load SentenceTransformer model on first invocation."""
         if self._model is None:
             from sentence_transformers import SentenceTransformer
 
@@ -33,7 +28,6 @@ class LocalSentenceTransformerEmbeddings(Embeddings):
         return self._model
 
     def embed_documents(self, texts: List[str]) -> List[List[float]]:
-        """Compute embeddings for a list of documents."""
         if not texts:
             return []
         if os.getenv("APP_ENV", "").lower() == "testing" or settings.app_env == "testing":
@@ -58,7 +52,6 @@ class LocalSentenceTransformerEmbeddings(Embeddings):
             raise
 
     def embed_query(self, text: str) -> List[float]:
-        """Compute embedding for a single query."""
         if os.getenv("APP_ENV", "").lower() == "testing" or settings.app_env == "testing":
             vec = [0.0] * 384
             h = sum(ord(c) for c in text) % 384
@@ -79,7 +72,6 @@ class LocalSentenceTransformerEmbeddings(Embeddings):
 
 
 def get_embedding_function() -> LocalSentenceTransformerEmbeddings:
-    """Singleton getter for the local embedding model."""
     global _EMBEDDER_INSTANCE
     if _EMBEDDER_INSTANCE is None:
         _EMBEDDER_INSTANCE = LocalSentenceTransformerEmbeddings()

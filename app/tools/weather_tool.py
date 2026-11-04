@@ -176,19 +176,8 @@ def parse_target_date_or_month(date_input: str) -> Tuple[Optional[datetime], Opt
 
 @tool
 def get_weather_forecast(city: str, date_or_month: str = "") -> dict:
-    """Get weather forecast or seasonal climate data for supported travel destinations.
-
-    Supports Tokyo, Bangkok, Barcelona, and Reykjavik.
-    If the requested date is within 16 days, returns live daily forecast from Open-Meteo.
-    If the date is further ahead or a month name (e.g., 'December'), returns verified seasonal climate estimates.
-
-    Args:
-        city: Destination city name (Tokyo, Bangkok, Barcelona, Reykjavik).
-        date_or_month: Specific date (e.g., '2026-11-05', 'today') or month name (e.g., 'December').
-
-    Returns:
-        Structured dictionary containing temperature range, conditions, precipitation,
-        source ('Open-Meteo API' or 'Historical Climate'), and data_type ('live_forecast' or 'seasonal_estimate').
+    """
+    Get the weather forecast for a given destination.
     """
     t0 = time.time()
     TraceLogger.tool_call("get_weather_forecast", {"city": city, "date_or_month": date_or_month})

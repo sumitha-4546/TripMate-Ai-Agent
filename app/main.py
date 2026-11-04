@@ -16,7 +16,6 @@ from app.utils.logger import TraceLogger, logger
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    """Lifespan event handler: initializes RAG vector store and pre-loads models on startup."""
     logger.info("Initializing TripMate AI application...")
     logger.info(f"Configured Gemini Model: {settings.gemini_model}")
     logger.info(f"Configured Embedding Model: {settings.embedding_model}")

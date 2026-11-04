@@ -26,7 +26,6 @@ TOOLS_BY_NAME = {t.name: t for t in TOOLS}
 
 
 def get_llm(model_name: Optional[str] = None):
-    """Initialize Google Gemini chat model with tool calling support."""
     model = model_name or settings.gemini_model
     api_key = settings.gemini_api_key
 
@@ -38,12 +37,11 @@ def get_llm(model_name: Optional[str] = None):
         google_api_key=api_key or "DUMMY_KEY",
         temperature=0.2,
         max_retries=2,
-        timeout=30.0,
+        timeout=60.0,
     )
 
 
 def agent_node(state: AgentState) -> Dict[str, Any]:
-    """Agent node: invokes Gemini LLM with bound tools based on current conversation history."""
     messages = list(state.get("messages", []))
     request_id = state.get("request_id", "")
     iteration = state.get("iteration", 0) + 1
@@ -93,7 +91,6 @@ def agent_node(state: AgentState) -> Dict[str, Any]:
 
 
 def execute_tools_node(state: AgentState) -> Dict[str, Any]:
-    """Tool execution node: executes all requested tools and records observable execution traces."""
     last_message = state["messages"][-1]
     request_id = state.get("request_id", "")
     existing_trace = list(state.get("trace", []))
@@ -184,7 +181,6 @@ def execute_tools_node(state: AgentState) -> Dict[str, Any]:
 
 
 def should_continue(state: AgentState) -> Literal["tools", "__end__"]:
-    """Conditional edge router: determines whether to execute tools or end the cycle."""
     last_message = state["messages"][-1]
     iteration = state.get("iteration", 0)
 
@@ -201,7 +197,6 @@ def should_continue(state: AgentState) -> Literal["tools", "__end__"]:
 
 
 def create_agent_graph():
-    """Build and compile the LangGraph StateGraph workflow."""
     workflow = StateGraph(AgentState)
 
     # Add agent decision node and tool execution node

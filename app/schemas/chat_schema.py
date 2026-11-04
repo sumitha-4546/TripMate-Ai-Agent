@@ -3,7 +3,6 @@ from pydantic import BaseModel, Field
 
 
 class ChatRequest(BaseModel):
-    """Incoming user chat query."""
 
     query: str = Field(
         ...,
@@ -14,7 +13,6 @@ class ChatRequest(BaseModel):
 
 
 class ToolTraceItem(BaseModel):
-    """Observable tool execution trace record."""
 
     tool: str = Field(..., description="Name of the executed tool")
     reason: str = Field(
@@ -35,7 +33,6 @@ class ToolTraceItem(BaseModel):
 
 
 class ChatResponse(BaseModel):
-    """Chat API response schema."""
 
     answer: str = Field(..., description="Synthesized natural language response")
     tools_used: List[str] = Field(
@@ -52,7 +49,6 @@ class ChatResponse(BaseModel):
 
 
 class HealthResponse(BaseModel):
-    """Health check response schema."""
 
     status: str = Field(..., description="Service health status, e.g., 'healthy'")
     gemini_model: str = Field(..., description="Configured Gemini model")

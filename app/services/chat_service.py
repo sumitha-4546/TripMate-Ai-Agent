@@ -8,7 +8,6 @@ from app.utils.logger import TraceLogger, logger
 
 
 class ChatService:
-    """Service layer managing user chat execution through LangGraph."""
 
     def __init__(self, graph=None) -> None:
         self.graph = graph or agent_graph
@@ -16,7 +15,6 @@ class ChatService:
     def process_chat_sync(
         self, request: ChatRequest, request_id: Optional[str] = None
     ) -> ChatResponse:
-        """Synchronously process a chat request through the LangGraph workflow and return structured response."""
         rid = request_id or str(uuid.uuid4())[:8]
         query = request.query.strip()
 
@@ -40,14 +38,28 @@ class ChatService:
             messages = final_state.get("messages", [])
             answer = "I'm sorry, I could not generate a response. Please try again."
 
+            def _extract_text(raw_content) -> str:
+                if isinstance(raw_content, str):
+                    return raw_content
+                if isinstance(raw_content, list):
+                    parts = []
+                    for item in raw_content:
+                        if isinstance(item, str):
+                            parts.append(item)
+                        elif isinstance(item, dict) and "text" in item:
+                            parts.append(item["text"])
+                    return "".join(parts)
+                return str(raw_content) if raw_content else ""
+
             # Find the last AIMessage with text content
             for msg in reversed(messages):
-                content = getattr(msg, "content", None)
-                if content and isinstance(content, str) and not getattr(msg, "tool_calls", None):
-                    answer = content
+                raw_c = getattr(msg, "content", None)
+                text_c = _extract_text(raw_c)
+                if text_c and not getattr(msg, "tool_calls", None):
+                    answer = text_c
                     break
-                elif content and isinstance(content, str) and msg.__class__.__name__ == "AIMessage":
-                    answer = content
+                elif text_c and msg.__class__.__name__ == "AIMessage":
+                    answer = text_c
 
             tools_used = final_state.get("tools_used", [])
             raw_trace = final_state.get("trace", [])

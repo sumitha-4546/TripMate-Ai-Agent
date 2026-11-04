@@ -10,14 +10,7 @@ from app.services.chat_service import ChatService
 
 
 def test_end_to_end_packing_flow_with_multi_tool_reasoning():
-    """End-to-End integration test for TripMate travel assistant:
-
-    1. User submits packing question: 'I am visiting Tokyo in December. What should I pack?'
-    2. Agent identifies need for both destination RAG (local advice) and weather forecast.
-    3. Both tools execute and populate the observable execution trace.
-    4. Gemini synthesizes the final coherent response combining both tool results.
-    5. Validates final response schema, tools used, and trace structure.
-    """
+    
     # 1. Mock LLM sequence:
     # First invocation: calls both tools
     # Second invocation (after receiving tool messages): synthesizes final response

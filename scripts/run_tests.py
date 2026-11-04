@@ -1,11 +1,4 @@
-"""TripMate Test Suite Runner.
 
-Executes all 16 unit and integration tests across:
-- tests/test_destination_tool.py (4 tests)
-- tests/test_weather_tool.py (6 tests)
-- tests/test_agent_routing.py (5 tests)
-- tests/test_integration.py (1 test)
-"""
 
 import os
 import sys

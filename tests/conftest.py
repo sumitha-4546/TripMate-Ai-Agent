@@ -25,6 +25,5 @@ from app.rag.vector_store import DestinationVectorStore, get_vector_store
 
 @pytest.fixture(scope="session", autouse=True)
 def ensure_vector_store_initialized():
-    """Ensure vector store is initialized with stored documents."""
     store = get_vector_store()
     store.initialize()

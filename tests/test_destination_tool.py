@@ -4,7 +4,6 @@ from app.tools.destination_tool import search_destination_guide
 
 
 class MockEmbeddings:
-    """Mock embeddings that produce consistent vectors for testing without loading model."""
     def embed_documents(self, texts):
         import numpy as np
         # Return deterministic unit vectors based on hash
@@ -21,7 +20,6 @@ class MockEmbeddings:
 
 
 def test_tokyo_visa_retrieval(monkeypatch):
-    """Test retrieving Tokyo visa and entry requirements."""
     store = get_vector_store()
     # Initialize with real destination documents
     store.initialize()
@@ -37,7 +35,6 @@ def test_tokyo_visa_retrieval(monkeypatch):
 
 
 def test_bangkok_customs_retrieval():
-    """Test retrieving Bangkok local customs and etiquette guidelines."""
     store = get_vector_store()
     store.initialize()
 
@@ -51,7 +48,6 @@ def test_bangkok_customs_retrieval():
 
 
 def test_barcelona_safety_retrieval():
-    """Test retrieving Barcelona safety and pickpocketing notes."""
     store = get_vector_store()
     store.initialize()
 
@@ -65,7 +61,6 @@ def test_barcelona_safety_retrieval():
 
 
 def test_unsupported_destination():
-    """Test searching for an unsupported destination returns an informative refusal."""
     store = get_vector_store()
     store.initialize()
 

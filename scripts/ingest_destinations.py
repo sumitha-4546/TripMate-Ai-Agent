@@ -1,4 +1,3 @@
-"""Ingest destination text files into local FAISS vector store."""
 
 import sys
 from pathlib import Path

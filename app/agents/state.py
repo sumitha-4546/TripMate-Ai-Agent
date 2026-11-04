@@ -5,7 +5,6 @@ from typing_extensions import TypedDict
 
 
 class AgentState(TypedDict):
-    """LangGraph agent state containing conversational message history and observable trace."""
 
     messages: Annotated[Sequence[BaseMessage], add_messages]
     trace: List[Dict[str, Any]]

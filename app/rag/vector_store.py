@@ -24,10 +24,7 @@ from app.utils.logger import logger
 
 
 class DestinationVectorStore:
-    """FAISS-based destination vector store with local persistence, metadata filtering,
-    and resilient cosine similarity fallback.
-    """
-
+    
     def __init__(self, data_dir: Path = settings.data_dir, store_dir: Path = settings.vector_store_dir) -> None:
         self.data_dir = data_dir
         self.store_dir = store_dir
@@ -46,7 +43,6 @@ class DestinationVectorStore:
         return len(self.documents)
 
     def initialize(self, force_reload: bool = False) -> None:
-        """Initialize or load the vector index."""
         if self._is_initialized and not force_reload:
             return
 
@@ -68,7 +64,6 @@ class DestinationVectorStore:
         self._is_initialized = True
 
     def _build_index(self) -> None:
-        """Build vector index from destination documents and persist to disk."""
         logger.info(f"Building destination index from {self.data_dir}...")
         self.documents = load_destination_documents(self.data_dir)
 
@@ -103,7 +98,6 @@ class DestinationVectorStore:
         logger.info(f"Vector store built with {self.total_vectors} vectors (dim={dim}).")
 
     def _save_to_disk(self) -> None:
-        """Save vector store and documents metadata to disk."""
         try:
             self.store_dir.mkdir(parents=True, exist_ok=True)
             with open(self.store_dir / "docs.pkl", "wb") as f:
@@ -123,7 +117,6 @@ class DestinationVectorStore:
             logger.error(f"Error persisting vector store to disk: {e}")
 
     def _load_from_disk(self) -> None:
-        """Load index and documents metadata from disk."""
         with open(self.store_dir / "docs.pkl", "rb") as f:
             self.documents = pickle.load(f)
 
@@ -141,7 +134,6 @@ class DestinationVectorStore:
                 self.index = None
 
     def detect_destination(self, query: str) -> Optional[str]:
-        """Detect if a known destination is mentioned in the query."""
         q_lower = query.lower()
         for key, info in KNOWN_DESTINATIONS.items():
             if key in q_lower or info["country"].lower() in q_lower:
@@ -149,7 +141,6 @@ class DestinationVectorStore:
         return None
 
     def detect_unsupported_destination(self, query: str) -> Optional[str]:
-        """Detect if the user is asking about an unsupported city."""
         common_destinations = [
             "paris", "london", "rome", "bali", "new york", "dubai", "berlin",
             "singapore", "sydney", "toronto", "amsterdam", "madrid", "seoul",
@@ -169,7 +160,6 @@ class DestinationVectorStore:
         k: int = 3,
         destination_filter: Optional[str] = None,
     ) -> List[str]:
-        """Search destination guide documents using semantic similarity."""
         self.initialize()
 
         if self.total_vectors == 0:
@@ -257,7 +247,6 @@ _VECTOR_STORE_INSTANCE: Optional[DestinationVectorStore] = None
 
 
 def get_vector_store() -> DestinationVectorStore:
-    """Singleton getter for DestinationVectorStore."""
     global _VECTOR_STORE_INSTANCE
     if _VECTOR_STORE_INSTANCE is None:
         _VECTOR_STORE_INSTANCE = DestinationVectorStore()

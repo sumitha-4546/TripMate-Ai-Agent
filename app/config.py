@@ -18,11 +18,10 @@ load_dotenv(dotenv_path=BASE_DIR / ".env", override=False)
 
 
 class Settings:
-    """TripMate application configuration settings."""
 
     def __init__(self) -> None:
         self.gemini_api_key: str = os.getenv("GEMINI_API_KEY", "")
-        self.gemini_model: str = os.getenv("GEMINI_MODEL", "gemini-1.5-flash")
+        self.gemini_model: str = os.getenv("GEMINI_MODEL", "gemini-3.1-flash-lite")
         self.weather_api_base_url: str = os.getenv(
             "WEATHER_API_BASE_URL", "https://api.open-meteo.com"
         ).rstrip("/")
@@ -40,12 +39,10 @@ class Settings:
 
     @property
     def is_api_key_configured(self) -> bool:
-        """Check if a Gemini API key is configured and not placeholder."""
         key = self.gemini_api_key.strip()
         return bool(key) and "your_gemini_api_key" not in key
 
     def safe_dict(self) -> dict:
-        """Return non-sensitive configuration dictionary for logs/diagnostics."""
         return {
             "gemini_model": self.gemini_model,
             "has_gemini_key": self.is_api_key_configured,

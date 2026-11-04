@@ -9,7 +9,6 @@ from app.schemas.chat_schema import ChatRequest
 
 
 def build_mock_llm(responses_sequence):
-    """Create a mock LLM that returns a sequence of predetermined AIMessages."""
     mock_llm = MagicMock()
     mock_bound = MagicMock()
     mock_bound.invoke.side_effect = responses_sequence
@@ -18,7 +17,6 @@ def build_mock_llm(responses_sequence):
 
 
 def test_visa_question_routes_to_rag_tool():
-    """Test that a visa inquiry calls the RAG destination tool and not the weather tool."""
     mock_responses = [
         AIMessage(
             content="",
@@ -51,7 +49,6 @@ def test_visa_question_routes_to_rag_tool():
 
 
 def test_weather_question_routes_to_weather_tool():
-    """Test that a weather inquiry calls the weather forecast tool and not the RAG tool."""
     mock_responses = [
         AIMessage(
             content="",
@@ -84,7 +81,6 @@ def test_weather_question_routes_to_weather_tool():
 
 
 def test_packing_question_routes_to_both_tools():
-    """Test that packing inquiry dynamically calls both destination RAG and weather tools."""
     mock_responses = [
         AIMessage(
             content="",
@@ -128,7 +124,6 @@ def test_packing_question_routes_to_both_tools():
 
 
 def test_greeting_invokes_no_tools():
-    """Test that greetings are answered directly without executing tools."""
     mock_responses = [
         AIMessage(
             content="Hello! I am TripMate, your AI travel assistant. How can I help you plan your next trip?",
@@ -150,7 +145,6 @@ def test_greeting_invokes_no_tools():
 
 
 def test_unsupported_flight_booking_invokes_no_tools():
-    """Test that out-of-scope flight booking request is politely declined without calling tools."""
     mock_responses = [
         AIMessage(
             content="I am sorry, but I cannot book flights. TripMate provides travel guides, visa info, weather, and packing advice.",

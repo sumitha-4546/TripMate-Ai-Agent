@@ -593,38 +593,21 @@ Processes traveler queries through the LangGraph agent and returns synthesized a
 
 ---
 
-## 📹 Loom Demo Video Walkthrough Script (5–8 Minutes)
+## 🎥 Project Demo Video
 
-Use this structured script when recording your demonstration video:
+Watch the complete TripMate AI Travel Assistant demonstration:
 
-- **Minute 0:00 – 1:00: Introduction & Overview**
-  - Introduce yourself and introduce **TripMate – AI Travel Assistant**.
-  - State the key objective: An Agentic AI application built for Bitcot Technologies using Google Gemini API and LangGraph, strictly without OpenAI.
-  - Highlight the tech stack: LangGraph, Gemini 1.5 Flash, Sentence Transformers, FAISS, FastAPI, Open-Meteo.
-- **Minute 1:00 – 2:30: Architecture & Code Walkthrough**
-  - Walk through the project layout: `app/agents/graph.py`, `app/tools/`, `app/rag/`, and `app/main.py`.
-  - Highlight `app/agents/graph.py`: Show how `StateGraph` defines nodes, tools, and the conditional router (`should_continue`).
-  - Explain how Gemini native tool calling dynamically selects `search_destination_guide` or `get_weather_forecast`.
-  - Show `app/rag/vector_store.py`: Point out the local embedding generation, FAISS index loading, and hybrid search.
-- **Minute 2:30 – 5:30: Live Interactive Demonstration (`scripts/run_demo.py`)**
-  - Run `python scripts/run_demo.py` in your terminal.
-  - **Scenario 1 (Visa)**: Show `search_destination_guide` being called and the visa disclaimer preserved.
-  - **Scenario 2 (Weather)**: Show `get_weather_forecast` called with temperature ranges.
-  - **Scenario 3 (Multi-Tool Packing)**: Highlight both tools executing in a single query and Gemini synthesizing the combined weather + cultural packing advice.
-  - **Scenario 4 (Greeting)**: Show direct response with zero tools called.
-  - **Scenario 5 (Unsupported Booking)**: Show polite refusal for flight booking with zero tools called.
-  - **Scenario 6 (Unsupported Destination)**: Show graceful guidance when Paris is requested.
-- **Minute 5:30 – 6:30: Testing & Verification**
-  - Run `pytest -v` in the terminal to demonstrate all 16 tests passing in ~3 seconds.
-  - Show test coverage across destination RAG, weather tool, agent routing, and end-to-end integration.
-- **Minute 6:30 – 7:30: API Demonstration (`http://localhost:8000/docs`)**
-  - Show the FastAPI Swagger documentation.
-  - Execute `GET /health` to display system status, loaded vectors, and configured Gemini model.
-  - Execute `POST /api/chat` with a packing query to show the live JSON response with full execution traces.
-- **Minute 7:30 – 8:00: Conclusion & Wrap-up**
-  - Summarize key design patterns: resilience, modularity, observable execution traces, and zero OpenAI dependencies.
-  - Thank the Bitcot Technologies team.
+📹 **[Click here to watch the TripMate Demo Video](YOUR_GOOGLE_DRIVE_LINK)**
 
+The video covers:
+- Project overview and architecture
+- AI models and technology stack
+- LangGraph agent orchestration
+- RAG and FAISS vector search
+- Weather API integration
+- Single-tool and multi-tool execution
+- Postman API testing
+- Automated test execution
 ---
 
 ## 📝 Assessment Submission Checklist
@@ -646,3 +629,4 @@ Use this structured script when recording your demonstration video:
 ---
 
 *TripMate AI Travel Assistant — Engineered with precision.*
+
